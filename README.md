@@ -88,26 +88,3 @@ This repository is pre-configured for instant serverless deployment on Vercel us
 └── templates/
     └── index.html          # Clean structure with dynamic status script
 ```
-
----
-
-## 💡 LinkedIn Showcase Template
-
-*Looking to share this on LinkedIn? Here is a ready-to-use template for your post!*
-
-```text
-🚀 Just built and deployed MakeMyList — a sleek, AI-driven event logistics & budget planner! 📋✨
-
-Planning events involves calculating quantities, categorizing items, and estimating budgets. MakeMyList automates this by turning simple prompts (e.g. "House party for 6 people under ₹2,000") into structured checklist dashboards in seconds.
-
-Key Highlights:
-🧠 Gemini 2.5 Flash integration via the new google-genai SDK.
-🔒 Strict JSON structural schema enforcement using Pydantic.
-🎨 Modern, responsive glassmorphic UI matching top LLM layouts.
-⚡ Dynamic Google-like loading animations with cross-fading stages and progress bars.
-☁️ Fully optimized for serverless deployments on Vercel.
-
-Check out the code on GitHub: https://github.com/vihansr/MakeMyList
-
-#Python #Flask #GenerativeAI #Gemini #Vercel #WebDevelopment #Pydantic #UXDesign #Portfolio
-```
