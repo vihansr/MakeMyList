@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make My List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container {% if res %}has-results{% endif %}">
+        <header class="main-header">
+            <h1 class="logo">Make My List</h1>
+            <p class="subtitle">Quickly organize your event items, quantities, and budgets</p>
+        </header>
+
+        <main class="content-area">
+            {% if error %}
+            <div class="error-banner">
+                <svg class="error-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <div class="error-message">
+                    <strong>Unable to generate list:</strong> {{ error }}
+                </div>
+            </div>
+            {% endif %}
+
+            <form method="post" class="search-form" id="generator-form">
+                <div class="search-bar-wrapper">
+                    <input type="text" name="prompt" placeholder="Arranging a house party for 6 people, keep budget under ₹2000" required value="{{ request.form.get('prompt', '') }}">
+                    <button type="submit" class="send-btn" aria-label="Generate List">
+                        <svg class="send-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="19" x2="12" y2="5"></line>
+                            <polyline points="5 12 12 5 19 12"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+
+            {% if res %}
+            <section class="results-section">
+                <div class="results-header">
+                    <h2 class="results-title">{{ res['title'] }}</h2>
+                    <div class="summary-cards">
+                        <div class="summary-card">
+                            <span class="card-label">Total Items</span>
+                            <span class="card-value">{{ res['items']|length }}</span>
+                        </div>
+                        <div class="summary-card">
+                            <span class="card-label">Est. Budget</span>
+                            <span class="card-value">₹{{ total_price }}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="results-table-wrapper">
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th class="col-name">Item Name</th>
+                                <th class="col-quantity">Quantity</th>
+                                <th class="col-price">Est. Price (INR)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in res['items'] %}
+                            <tr class="item-row">
+                                <td class="item-name">{{ item.name }}</td>
+                                <td class="item-quantity">{{ item.quantity }}</td>
+                                <td class="item-price">₹{{ item.price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            {% endif %}
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner-container">
+            <div class="loading-animation-wrapper">
+                <div class="pulse-ring"></div>
+                <div class="spinner-logo">📋</div>
+            </div>
+            <h2 class="loading-text">Creating Your List</h2>
+            <div class="progress-status-container">
+                <p class="loading-status-text" id="loading-status-text">Analyzing event details...</p>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progress-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const stepsData = [
+            "Analyzing event requirement...",
+            "Researching standard packaging...",
+            "Estimating local market prices...",
+            "Sorting and categorizing items...",
+            "Finalizing your customized checklist..."
+        ];
+
+        document.getElementById('generator-form').addEventListener('submit', function() {
+            const overlay = document.getElementById('loading-overlay');
+            const statusEl = document.getElementById('loading-status-text');
+            const progressFill = document.getElementById('progress-bar-fill');
+            
+            overlay.classList.add('active');
+            
+            // Set initial state
+            statusEl.textContent = stepsData[0];
+            statusEl.classList.remove('fade-out');
+            progressFill.style.width = '10%';
+
+            let currentStep = 0;
+
+            const interval = setInterval(() => {
+                currentStep++;
+                if (currentStep < stepsData.length) {
+                    // Fade out
+                    statusEl.classList.add('fade-out');
+                    
+                    setTimeout(() => {
+                        // Change text
+                        statusEl.textContent = stepsData[currentStep];
+                        // Fade in
+                        statusEl.classList.remove('fade-out');
+                        
+                        // Update progress bar
+                        const percentage = 10 + (currentStep / (stepsData.length - 1)) * 90;
+                        progressFill.style.width = `${percentage}%`;
+                    }, 300);
+                } else {
+                    clearInterval(interval);
+                }
+            }, 1800);
+        });
+    </script>
+</body>
+</html>
