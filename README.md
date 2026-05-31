@@ -1,4 +1,4 @@
-# MakeMyList 📋✨
+# MakeMyList
 
 **MakeMyList** is a modern, AI-powered event logistics and budget planner that transforms natural language event prompts (e.g., *"Arranging a house party for 6 people, keep budget under ₹2000"*) into complete, categorized event checklists with precise quantities and local Indian market price estimates (INR) in seconds.
 
@@ -6,7 +6,7 @@ Built with a focus on polished user experience, it features a sleek LLM-style pr
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 *   **Natural Language Planner:** Describe any event, attendee count, budget constraints, or theme, and the AI does the heavy lifting.
 *   **Structured Output Engine:** Enforces strict Pydantic schemas using the modern `google-genai` SDK to guarantee robust, valid JSON response validation every single time.
@@ -17,7 +17,7 @@ Built with a focus on polished user experience, it features a sleek LLM-style pr
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 *   **Backend:** Python 3.10+ / Flask (WSGI)
 *   **AI Engine:** Gemini 2.5 Flash (`google-genai` SDK)
@@ -27,7 +27,7 @@ Built with a focus on polished user experience, it features a sleek LLM-style pr
 
 ---
 
-## ⚙️ Local Installation & Setup
+## Local Installation & Setup
 
 Follow these steps to run the application locally on your machine.
 
@@ -65,7 +65,7 @@ Open your browser and navigate to `http://127.0.0.1:5000`.
 
 ---
 
-## ☁️ Deployment on Vercel
+## Deployment on Vercel
 
 This repository is pre-configured for instant serverless deployment on Vercel using `vercel.json`.
 
@@ -75,7 +75,7 @@ This repository is pre-configured for instant serverless deployment on Vercel us
 
 ---
 
-## 📂 Project Architecture
+## Project Architecture
 
 ```plaintext
 ├── app.py                  # Main Flask web application & router
